@@ -1,24 +1,34 @@
-import logo from './logo.svg';
+
 import './App.css';
+import { BrowserRouter as Router , Route } from 'react-router-dom';
+import Products from './Components/Products';
+import { Provider } from 'react-redux';
+import store from './store/index';
+import Header from './Components/Header';
+import Home from './Components/Home';
+import './FireBase/fireBase'
+
+  
 
 function App() {
+  
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+
+    <Provider store={store}>
+    <Header></Header> 
+    {/* <Home></Home> */}
+    <Router>
+       <>
+          <Route path="/" exact component={Home}></Route>
+          <Route path="/products" component={Products}></Route>
+
+       </>
+    </Router>
+    </Provider>
+   
+        
+    </>
   );
 }
 

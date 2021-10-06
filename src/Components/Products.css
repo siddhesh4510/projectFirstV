@@ -1,0 +1,10 @@
+.home-design{
+    /* background-image: url("../Images/71mYQJEpQFL._SX3000_.jpg"); */
+    width: 100%;
+    z-index: -1;
+    margin-bottom: -150px;
+    mask-image: linear-gradient( to bottom, rgba(0,0,0,1) , rgba(0,0,0,0));
+}
+.product{
+    margin-left: 100px ;
+}
