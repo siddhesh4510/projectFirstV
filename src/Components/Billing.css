@@ -1,0 +1,12 @@
+.billing {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 500px;
+    height: 150px;
+    padding: 15px;
+    background-color: lightcyan;
+    border: 2px solid gray;
+    border-radius: 3px;
+    margin: 7%;
+  }

@@ -3,29 +3,14 @@ import React from 'react';
 import Category from './Categories';
 import img from '../Images/71mYQJEpQFL._SX3000_.jpg';
 import './Products.css';
-import { useDispatch } from "react-redux";
-import { getDatabase, ref, onValue} from "firebase/database";
-import db from '../FireBase/fireBase';
 
-
-const fromDb = (db, dispatch) => {
-    
-    const starCountRef = ref(db, 'products/');
-   onValue(starCountRef, (snapshot) => {
-    const data = snapshot.val();
-    console.log(Object.values(data));
-    dispatch({ type: 'SET_MESSAGE', payload: Object.values(data) })
-  
-  });
-  };
   
 
 
 
 
 export default function Home(props) {
-    const dispatch=useDispatch();
-    fromDb(db,dispatch);
+    
     var categories=[ {'name':'Electronics' ,
                        'image':'https://images-eu.ssl-images-amazon.com/images/G/31/img21/CEPC/Jupiter/GW/P1/D28587006_IN_CEPC_Electronics_GW_graphics_Jupiter_P1_rush_758X6081x_1._SY304_CB639926897_.jpg'
                     },

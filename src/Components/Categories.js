@@ -26,24 +26,7 @@ export default function CategoryCard(props) {
   const history=useHistory();
     const classes = useStyles();
     const dispatch=useDispatch();
-    var clickOnKids=()=>{
-      console.log("clickOnKids");
-      dispatch({type:'Kids'});
-      props.clickFunction();
-
-      // history.push('/products');
-      // props.history.push('/products');
-
-      
-    }
-    const clickOnElectronics=()=>{
-      console.log("clickOnElectronics");
-      dispatch({type:'Electronics'});
-    }
-    const clickOnFashion=()=>{
-      console.log("clickOnFashion");
-      dispatch({type:'Fashion'});
-    }
+   
 
     const clickOnCard=()=>{
       if(props.name=="Kids"){
@@ -62,7 +45,7 @@ export default function CategoryCard(props) {
 
 
     return (
-    <Card className={classes.root} >
+    <Card className={classes.root} style={{backgroundColor:"white"}}>
          <Typography gutterBottom variant="h4" component="h3">
          {props.name}
         </Typography >

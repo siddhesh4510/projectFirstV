@@ -4,26 +4,26 @@ import Card from "@material-ui/core/Card";
 import CardMedia from "@material-ui/core/CardMedia";
 import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
-import './Card.css';
-import {Link} from 'react-router-dom';
+import './Card.css'
 
 // import waveImg from "./wave.png";
 
 
 const useStyles = makeStyles({
   root: {
-    maxWidth: 230,
+    maxWidth: 730,
     margin: 25,
     boxShadow:"rgba(0, 0, 0, 0.35) 0px 5px 15px",
-    cursor:"pointer"
+    cursor:"pointer",
+    display: 'flex',
+
+    
   },
   media: {
-    height: "342px"
+    height: "142px",
+    width:"100px"
   }
 });
-
-
-
 
 
 
@@ -41,20 +41,18 @@ const getStars = ( starCount ) =>{
 
 
 
-export default function ProductCard( props ) {
+export default function SellerProductCard( props ) {
   const classes = useStyles();
-  
 
 
   return (
-
-    <Card className={classes.root}>
-          <Link to={`/product/${props.index}`}>
+    
+    <Card className={classes.root} >
           <CardMedia
             className={classes.media}
             image={props.image}
+
           />
-           </Link>
           
           <CardContent>
               <a href="#">
@@ -66,12 +64,10 @@ export default function ProductCard( props ) {
                 <i class="fa fa-rupee" style={{fontSize:24}}></i>
                   {props.price }
               </Typography>
+              {getStars(parseFloat( props.stars))}
           </CardContent>
-        {getStars(parseFloat( props.stars))}
+
     </Card>
-   
    
   );
 }
-
-

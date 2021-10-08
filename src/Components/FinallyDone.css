@@ -1,0 +1,10 @@
+.orderHeading {
+    border: 2px solid;
+    padding: 10px;
+  }
+  
+  .ordersCompleted {
+    border: 2px solid black;
+    padding: 25px;
+    margin: 0 20px;
+  }
