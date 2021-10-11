@@ -4,6 +4,10 @@ import Card from "@material-ui/core/Card";
 import CardMedia from "@material-ui/core/CardMedia";
 import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
+import Button from "@material-ui/core/Button";
+import {db,auth,database,newref,storage1} from './firebaseSeller';
+import {set,push} from "firebase/database";
+
 import './Card.css'
 
 // import waveImg from "./wave.png";
@@ -11,7 +15,7 @@ import './Card.css'
 
 const useStyles = makeStyles({
   root: {
-    maxWidth: 730,
+    
     margin: 25,
     boxShadow:"rgba(0, 0, 0, 0.35) 0px 5px 15px",
     cursor:"pointer",
@@ -20,8 +24,8 @@ const useStyles = makeStyles({
     
   },
   media: {
-    height: "142px",
-    width:"100px"
+    minHeight: "142px",
+    minWidth:"100px"
   }
 });
 
@@ -41,8 +45,18 @@ const getStars = ( starCount ) =>{
 
 
 
+
+
 export default function SellerProductCard( props ) {
   const classes = useStyles();
+  const deleteProduct=() => {
+  set(newref(database, 'products/'+props.productId),{
+    null:null,
+  });
+  props.fetchChanges();
+  
+  
+  }
 
 
   return (
@@ -55,15 +69,23 @@ export default function SellerProductCard( props ) {
           />
           
           <CardContent>
-              <a href="#">
-                  <Typography variant="body2" color="textSecondary" component="p">
-                      { props.name }
-                  </Typography>
-                </a>
+          <Typography gutterBottom variant="h5" component="h3">
+                
+                {props.name }
+            </Typography>
+
+                
               <Typography gutterBottom variant="h5" component="h3">
                 <i class="fa fa-rupee" style={{fontSize:24}}></i>
                   {props.price }
               </Typography>
+
+              <Typography variant="body2" color="textSecondary" component="p">
+                      { props.description }
+                  </Typography>
+              <Button style={{backgroundColor:"orange"}} variant="contained" onClick={deleteProduct}>
+                Double Click To Remove From Amazon
+          </Button>
               {getStars(parseFloat( props.stars))}
           </CardContent>
 

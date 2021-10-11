@@ -15,7 +15,8 @@ import SellerLogin from './Components/Seller/LoginSeller';
 import ProductDes from './Components/Product/Product';
 import CheckOut from './Components/checkOut';
 import Payment from "./Components/Payment";
-import Done from './Components/FinallyDone'
+import Done from './Components/FinallyDone';
+import Footer from './Components/Footer/Footer'
 
   
 
@@ -41,20 +42,26 @@ function App() {
               </Route>
                        <Route path="/cart">
                          <Header />
-                              <CheckOut/>
+                          <CheckOut/>
+                          <Footer/>
                         </Route>
               <Route path="/payment">
                 <Header/>
                   <Payment/>
+                  <Footer/>
 
                 </Route>
 
                 <Route path="/done">
                 <Header/>
                   <Done/>
-
+                  <Footer/>
                 </Route>
-
+                <Route path="/product/:id">
+                  <Header/>
+                    <ProductDes/>
+                    <Footer/>
+                        </Route>
 
               <Route path="/">
                     <Header></Header> 
@@ -67,15 +74,15 @@ function App() {
                               <Seller/>
                         </Route>
 
-                        <Route path="/product/:id">
-                              <ProductDes/>
-                        </Route>
+
 
 
 
                     </>
                   </Router>
+                  <Footer/>
               </Route>
+
 
 
           </Switch>

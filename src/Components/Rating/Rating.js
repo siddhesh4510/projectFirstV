@@ -61,9 +61,9 @@ function Rating(props) {
   return (
     <div className="container ">
       <form onSubmit={submitForm}>
-        <h2 className="pl-1 pt-4">Rating</h2>
+        <h2 className="ps-0 pt-4">Rating</h2>
         {/* The review: {reviewDesc} */}
-        <div className="stars pb-2 pl-2">
+        <div className="stars pb-2 ps-2">
           {stars.map((_, index) => {
             return (
               <FaStar

@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import {db,auth,database,newref,storage1} from './firebaseSeller'
-// import './AddProduct.css';
+import './Seller/AddProduct.css';
 import { useHistory } from "react-router";
 
 import { doc, setDoc ,getDoc,collection} from "firebase/firestore"; 
@@ -103,15 +103,15 @@ else{
     // console.log(getDownloadURL(ref(storage, file.name)))
     getDownloadURL(ref(storage1, file.name)).then(d=>{
       console.log(d)
-      
-   push(newref(database, 'products/'), {
+   var newDate=new Date()
+   set(newref(database, 'products/'+currentUser.uid+newDate), {
         productname: productName,
         description: Description,
         price:cost,
         imageUrl: d,
         Category:currentCategory,
         userId : currentUser.uid,
-        productId:currentUser.uid+new Date()
+        productId:currentUser.uid+newDate
         
         
       });
@@ -132,28 +132,25 @@ else{
 
         return (
       <>
-    <div className="login">
-                <div>
-            <img className="login_logo"
-            src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg" alt=""/>
-        </div>
+    <div className="login-form">
+              
        
             <h1>Become an
          <br/>Amazon seller</h1>
          <form onSubmit={onSubmit}>
-        <div className="container">
+        <div className="container-form">
          
          <h3><label >Name </label></h3>
-        <input id="post" className="ProductName" name="productName" type='text' required/>
+        <input id="post" className="ProductName-f" name="productName" type='text' required/>
         <br/>
        <h3>  <label >Image </label> </h3>
-        <input type="file" name="File" id="image"className="image-upload" accept=".jpg,.png,jpeg" required />
+        <input type="file" name="File" id="image"className="image-upload-f" accept=".jpg,.png,jpeg" required />
         <br/>
      <h3>  <label> Description </label></h3>
-        <input  className="Description"type="text" name="Description" required/>
+        <input  className="Description-f"type="text" name="Description" required/>
         <br></br>
         <h3><label>Category</label></h3> 
-        <select className="ProductName"
+        <select className="category"
         onChange={(event) => changeCategory(event.target.value)}
         value={currentCategory}
       >
@@ -165,8 +162,8 @@ else{
       </select>
 <br></br>
       <h3><label>  Price </label></h3>
-                  <input className="Price" type="text" name="cost" required/>
-                  <button className="upload_button" type="submit"  >Upload</button>
+                  <input className="Price-f" type="text" name="cost" required/>
+                  <button className="upload_button-f" type="submit"  >Upload</button>
                   
                   
 

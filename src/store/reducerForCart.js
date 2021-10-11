@@ -1,7 +1,9 @@
 export const initialState = {
     cart: [],
     user: null,
-    total:0
+    total:0,
+    isLogedIn:false,
+    displayName:''
   };
   
   export const getCartTotal = (cart) =>
@@ -50,6 +52,8 @@ const reducer = (state=initialState, action) => {
         return {
           ...state,
           user: action.user,
+          displayName:action.user.displayName
+
         };
 
       case "GET_TOTAL":
@@ -58,6 +62,20 @@ const reducer = (state=initialState, action) => {
           ...state,
           total:getCartTotal(state.cart)
         };
+      case "LOGIN_DONE":
+        console.log("In log Done");
+        return{ 
+          ...state,
+          isLogedIn:true,
+        };
+      case "LOGOUT_DONE":
+        console.log("In log Out");
+        return{
+          ...state,
+          isLogedIn:false,
+          displayName:''
+        }
+
   
       // case "MAKE_PAYMENT":
       //   return;

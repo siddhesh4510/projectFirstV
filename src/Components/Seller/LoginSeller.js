@@ -2,7 +2,10 @@ import './LoginSeller.css'
 import React from 'react';
 import {Link, useHistory} from 'react-router-dom';
 import { useState } from 'react';
-import {auth} from '../firebaseSeller';
+
+import {newref,storage1,database,auth,db} from '../firebaseSeller';
+import { useDispatch } from 'react-redux';
+import { getDatabase, ref, onValue} from "firebase/database";
 
 import { signInWithEmailAndPassword} from "firebase/auth";
 
@@ -11,6 +14,7 @@ function LoginSeller() {
 
     const[email,setEmail]=useState('');
     const[Password,setPassword]=useState('');
+    const dispatch = useDispatch();
   
     const signIn=(e)=>
     {
@@ -22,6 +26,20 @@ function LoginSeller() {
         console.log("succsess");
         console.log(user.uid);
         sessionStorage.setItem('uid', user.uid);
+        const starCountRef = ref(database, 'users/'+user.uid);
+        console.log('users/'+user.uid);
+        console.log(starCountRef)
+        onValue(starCountRef, (snapshot) => {
+            const data = snapshot.val();
+            console.log(Object.values(data));
+            sessionStorage.setItem('name',Object.values(data)[1]);
+            // dispatch({ type: 'SET_MESSAGE', payload: Object.values(data) });
+        
+        });
+
+        dispatch({type:'LOG_IN'});
+        dispatch({type:'LOGIN_DONE'});
+        dispatch({type:'ADD_USER',user:user});
     
 
         History.push('/seller')

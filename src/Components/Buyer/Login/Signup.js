@@ -1,18 +1,15 @@
 import './Login.css'
 import React from 'react';
-import { useState,useEffect } from 'react'; 
+import { useState} from 'react'; 
 import {Link, useHistory} from 'react-router-dom';
 import {auth1, db1} from './firebaseBuyer';
 import { Alert } from 'react-bootstrap';
 import { createUserWithEmailAndPassword } from "firebase/auth";
+import { ref, set } from "firebase/database";
+import PhoneInput from 'react-phone-number-input';
+import 'react-phone-number-input/style.css'
 
-import { getDatabase, ref, set } from "firebase/database";
-
-
-
-
-
- export default function Signup() {
+export default function Signup() {
      const History = useHistory()
     
     const[name,setName]=useState('');
@@ -20,64 +17,9 @@ import { getDatabase, ref, set } from "firebase/database";
     const[email,setEmail]=useState('');
     const[Password,setPassword]=useState('');
     const [ConfirmPassword,setConfirmPassword]=useState('');
-    const [currentUser,setcurrentUser]=useState()
     const[error,setError]=useState('')
-    const [loading,setLoading]=useState(true)
-    const [id,setID]=useState('')
-    //       const register=async (e)=>
-    //  {
-    //      e.preventDefault()
-    //      if (Password !== ConfirmPassword)
-    //      {
-    //          return setError("password do not match")
-    //      }
-    //      else{
-
-    //        setError('')
-    //        setLoading(true)
-    //        try{
-    //   const result=  await  auth1.createUserWithEmailAndPassword(email,Password)
-    //   const x=(result.user.uid)
-       
-      
-         
-             
-    //          if(auth1)
-    //          {
-    //              alert("Account created Successfully")
-                
-               
-                  
-    //               History.push('/login')
-                 
-                
-
-                 
-
-    //          }
-    //           if(name!=='' && mobile!=='' &&email!=='' && Password!=='' && ConfirmPassword!=='')
-    //           {
-                         
-    //              const store= db1.ref("users/"+x)
-    //              const users={
-                 
-    //                  name :name,
-    //                  mobile:mobile,
-                    
-    //              };
-    //                store.push(users)
-    //          }
-            
-    //         }
-    //         catch(error){
-    //             setLoading(true)
-    //             alert(error.message)
-                
-    //         }
     
-    //     }
     
-    //  }
     const register=async (e)=>{
         e.preventDefault();
         
@@ -88,7 +30,7 @@ import { getDatabase, ref, set } from "firebase/database";
          }
          else{
             setError('')
-            setLoading(true);
+           
             await createUserWithEmailAndPassword(auth1, email, Password)
                 .then((userCredential) => {
                     // Signed in 
@@ -114,19 +56,10 @@ import { getDatabase, ref, set } from "firebase/database";
                     alert(errorMessage);
                     // ..
                 });
-
-                
-
-         
-        }
+    }
 
     }
    
-
-
-
-
-
     return (
         <div className='login'>
             <Link to='/'>
@@ -142,7 +75,7 @@ import { getDatabase, ref, set } from "firebase/database";
                     <h5>Your name</h5>
                     <input type="text"  pattern="[a-z||A-Z]+"  value={name} onChange={e=> setName(e.target.value)} required/>
                     <h5>Mobile number</h5>
-                    <input type="tel" value={mobile} pattern="((\+*)((0[ -]*)*|((91 )*))((\d{12})+|(\d{10})+))|\d{5}([- ]*)\d{6}" onChange={e=> setMobile(e.target.value)} required/>
+                    <PhoneInput className="phoneinput"type="tel" value={mobile}  onChange={setMobile} required/>
                     <h5>Email</h5>
                     <input type="email" value={email} onChange={e=> setEmail(e.target.value)} required />
                     <h5>Password</h5>
@@ -170,8 +103,7 @@ import { getDatabase, ref, set } from "firebase/database";
         </div>
     )
 
-
-    }
+}
 
 
 

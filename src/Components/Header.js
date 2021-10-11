@@ -19,28 +19,37 @@ const fromDb = (database, dispatch) => {
    onValue(starCountRef, (snapshot) => {
     const data = snapshot.val();
     console.log(Object.values(data));
-    dispatch({ type: 'SET_MESSAGE', payload: Object.values(data) })
+    dispatch({ type: 'SET_MESSAGE', payload: Object.values(data) });
   
   });
   };
+  
 
 
 function Header(props) {
   const dispatch=useDispatch();
-  
+  console.log(sessionStorage.getItem('uid'));
 
   const history = useHistory();
 
-  var nproducts=useSelector(state=>state.listReducer.fixedProductList)
+  var nproducts=useSelector(state=>state.listReducer.fixedProductList);
+  console.log(nproducts);
 
   const [text , setText ]=useState('');
   const [suggestion , setSuggestion] = useState([]);
-  const [userName , setUserName] = useState(sessionStorage.getItem('name'));
+  const [userName , setUserName] = useState('');
   const [productList , setProductList] = useState([]);
+  var uname=sessionStorage.getItem('name');
   useEffect(()=>{
     fromDb(database,dispatch);
+    setUserName(uname);
   },[]);
   var len=useSelector(state=>state.cartReducer.cart).length;
+  var isLogedIn=useSelector(state=>state.cartReducer.isLogedIn);
+  var user=useSelector(state=>state.cartReducer.user);
+  var userNameStore=useSelector(state=>state.cartReducer.displayName);
+  useSelector(state=>{console.log(state)});
+  console.log(isLogedIn);
 
   const onChangeHandler=(text)=>{
     let matches=[];
@@ -54,6 +63,13 @@ function Header(props) {
     setText(text);
     setSuggestion(matches.slice(0,Math.min(matches.length,5)));
 
+  }
+
+  const signOut=()=>{
+    sessionStorage.removeItem('name');
+    sessionStorage.removeItem('uid');
+    setUserName('');
+    dispatch({type:'LOGOUT_DONE'});
   }
   return (
     <div className="header">
@@ -71,12 +87,25 @@ function Header(props) {
         <div class="header_searchBar">
         <ul>
           <li>
-          <input style={{width:"95%"}} type="text" onChange={e=>onChangeHandler(e.target.value)}  value={text}/>
+          <input style={{width:"95%"}}
+           type="text"
+            onChange={e=>onChangeHandler(e.target.value)}  
+            value={text}
+            // onBlur={()=>{
+            //   setTimeout(()=>{
+            //     setSuggestion([]);
+            //   },100)
+            // }}
+            />
         <SearchIcon className="header_searchIcon" />
           </li>
             {suggestion.map( item=>{
             console.log(item);
-            return <li style={{backgroundColor:"white",cursor:"pointer"}} onClick={()=>{console.log(item['name'])}}>{item['productname']}</li>
+            return <Link to={`/product/${item['productId']}`} style={{ textDecoration: 'none' }}>
+              <li style={{backgroundColor:"white",cursor:"pointer"}} className="suggestion" 
+              onClick={()=>{console.log(item);  
+              setSuggestion([]);setText(item['productname'])}}>{item['productname']}
+              </li></Link>
           })
             }
           
@@ -89,7 +118,8 @@ function Header(props) {
       <div className="header_navBar">
         <div className="header_menu">
           <span className="header_menuUp">Hello {userName}</span>
-          <span className="header_menuDown" onClick={()=>{history.push('/login')}}>Sign In</span>
+          {!isLogedIn && <span className="header_menuDown" onClick={()=>{history.push('/login')}}>Sign In</span>}
+          {isLogedIn && <span className="header_menuDown" onClick={signOut}>Sign Out</span>}
         </div>
 
         <div className="header_menu">

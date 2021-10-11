@@ -125,6 +125,12 @@ function Product(props) {
                 width: 1200,
                 height: 1800,
               },
+              style: {
+                marginLeft: "60px",
+                marginTop: "20px",
+                width: "500px",
+                height: "700px",
+              },
               hoverDelayInMs: 0,
               // imageClassName: "img",
               imageStyle: {
@@ -146,17 +152,17 @@ function Product(props) {
           <div className="row pt-1">
             <div className="col-4 ">Total Review: {reviewData.length}</div>
             {/* {rate.review.length} */}
-            <div className="col-4 ml-4">Dealer: Delaer</div>
+            {/* <div className="col-4 ml-4">Dealer: Delaer</div> */}
           </div>
           <hr />
           <div className="row">
             <p className="price col-1 p-2">Price:</p>
-            <p className="price-div w-100 pl-4 col-4 ">₹{product['price']}</p>
+            <p className="price-div  col-4 ">₹{product['price']}</p>
           </div>
 
           <div className="d-flex delivery-div">
-            <p className="free pl-1">FREE delivery: </p>
-            <p className="text-dark pl-3 pt-1 font-weight-bold"> {date}</p>
+            <p className="free ps-0">FREE delivery: </p>
+            <p className="text-dark ps-3 pt-1 fw-bold"> {date}</p>
           </div>
 
           <div className="">
@@ -187,7 +193,7 @@ function Product(props) {
                 {/* <div className="amountContainer">
                   <i class="bi bi-dash-circle"></i>
                   <div className="amount">1</div>
-                  <i class="bi bi-plus-circle"></i>
+                  <i class="bi bi-psus-circle"></i>
                 </div> */}
                 <button className="button-cart m-1" onClick={stockDec}>
                   Add to Cart

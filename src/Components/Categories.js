@@ -39,6 +39,9 @@ export default function CategoryCard(props) {
       if(props.name=="Electronics"){
         dispatch({type:'Electronics'});
       }
+      if(props.name=="Home"){
+        dispatch({type:'Home'});
+      }
       props.clickFunction();
 
     }

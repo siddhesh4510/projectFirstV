@@ -43,24 +43,29 @@ export default function Products(){
     var nproductList=useSelector(state=>state.listReducer.fixedProductList);
     //setProductList(nproductList.filter(item=>item['userId']=="qmHiTDwR8uaMuhyk074QmceTK502"));
     const [productList , setProductList]=useState(nproductList.filter(item=>item['userId']==sessionStorage.getItem('uid')));
+    console.log(productList);
+    const fetchChanges=()=>{
+        setProductList(nproductList.filter(item=>item['userId']==sessionStorage.getItem('uid')));
+        
+    }
     
 
-        onAuthStateChanged(auth,(user)=>{
-            if(user)
-            {
-              setCurrentUser(user);
-             console.log(user.uid);
+        // onAuthStateChanged(auth,(user)=>{
+        //     if(user)
+        //     {
+        //       setCurrentUser(user);
+        //      console.log(user.uid);
 
-             //setProductList(nproductList.filter(item=>item['userId']==currentUser.uid));
+        //      //setProductList(nproductList.filter(item=>item['userId']==currentUser.uid));
               
-            }
-            else{
+        //     }
+        //     else{
               
-              setCurrentUser(null)
-             alert("please Login first")
-             history.push('/LoginSeller')
-            }
-             })
+        //       setCurrentUser(null)
+        //      alert("please Login first")
+        //      history.push('/LoginSeller')
+        //     }
+        //      })
 
         // const starCountRef = newref(database, 'products/');
         // onValue(starCountRef, (snapshot) => {
@@ -87,15 +92,24 @@ export default function Products(){
             
 
             {/* <img src={img} className="home-design" height="400px"></img>      */}
-            <div className="row product">
+            <div className="row product ">
+            <div className="col-12 ">
                 {
                     productList.map( (product )=>{
                         return (
-                            <SellerProductCard name={product['productname']} price={product['price']} image={product['imageUrl']} stars={product['stars']}></SellerProductCard>
+                            <SellerProductCard name={product['productname']} 
+                                    price={product['price']} 
+                                    image={product['imageUrl']}
+                                    stars={product['stars']}
+                                    description={product['description']}
+                                    productId={product['productId']}
+                                    fetchChanges={fetchChanges}>
+                            </SellerProductCard>
 
                         )
                     })
                 }
+            </div>
             </div>
         </div>
     )

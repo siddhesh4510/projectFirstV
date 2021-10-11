@@ -5,11 +5,13 @@ import { useState } from 'react';
 import {auth1,firebase} from './firebaseBuyer';
 // import {} from '../Seller/SignupSeller';
 import {  signInWithPopup, GoogleAuthProvider ,signInWithEmailAndPassword } from "firebase/auth";
-import {db , auth} from '../../../FireBase/fireBase'
+import {db , auth} from '../../../FireBase/fireBase';
+import {useDispatch } from 'react-redux';
 
 
 function Login() {
     const History = useHistory();
+    const dispatch = useDispatch();
 
     const[email,setEmail]=useState('');
     const[Password,setPassword]=useState('');
@@ -40,9 +42,13 @@ function Login() {
                 const user = result.user;
                 console.log(user.displayName);
                 sessionStorage.setItem('name', user.displayName);
+                sessionStorage.setItem('uid', user.uid);
+                dispatch({type:'LOG_IN'});
+                dispatch({type:'LOGIN_DONE'});
+                dispatch({type:'ADD_USER',user:user});
                 History.push('/');
                 // ...
-                console.log("Login Success new Google")
+                console.log("Login Success new Google");
             }).catch((error) => {
                 // Handle Errors here.
                 const errorCode = error.code;
@@ -65,6 +71,11 @@ function Login() {
                 // Signed in 
                 const user = userCredential.user;
                 console.log(user);
+                sessionStorage.setItem('name',email);
+                sessionStorage.setItem('uid', user.uid);
+                dispatch({type:'LOG_IN'});
+                dispatch({type:'LOGIN_DONE'});
+                dispatch({type:'ADD_USER',user:user});
                 
                 History.push('/');
                 // ...
@@ -81,6 +92,10 @@ function Login() {
          e.preventDefault();
          
         History.push('/signup')
+    }
+    const signInSeller=(e)=>{
+        e.preventDefault();
+        History.push('/LoginSeller');
     }
   
     //  const signIn = e=>{
@@ -162,6 +177,7 @@ function Login() {
                     <input type="password"  onChange={e=> setPassword(e.target.value)}  />
 
                     <button type="submit" onClick={signIn} className="login-customerButton">Sign In As Customer</button>
+                    <button type="submit" onClick={signInSeller} className="login-customerButton">Sign In As Seller</button>
                     <br/>
                     
                 

@@ -5,19 +5,22 @@ import AddProduct from './Addproduct1'
 
 export default () => (
     <>
-
+    {/* <div style={{margin:"auto",textAlign:"center"}}>
+    <h3>Hi Siddhesh</h3>
+    </div> */}
     <Tabs>
-    <TabList>
-      <Tab>Your Products</Tab>
+    <TabList style={{backgroundColor:"#131921" , color:"orange"}}>
       <Tab>Add Product</Tab>
+      <Tab>Your Product</Tab>
     </TabList>
-
+    
     <TabPanel>
-
-      <SellerProduct></SellerProduct>
+    <AddProduct></AddProduct>
+      
     </TabPanel>
-    <TabPanel>
-        <AddProduct></AddProduct>
+    <TabPanel >
+
+        <SellerProduct></SellerProduct>
     </TabPanel>
   </Tabs>
     </>

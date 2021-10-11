@@ -1,25 +1,25 @@
 import React from 'react'
 import {auth,database} from '../firebaseSeller';
 import './SignupSeller.css'
-import { useState,useEffect } from 'react'; 
+import { useState} from 'react'; 
 import {Link, useHistory} from 'react-router-dom';
 import { Alert } from 'react-bootstrap';
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import {  ref, set } from "firebase/database";
+import PhoneInput from 'react-phone-number-input';
+import 'react-phone-number-input/style.css'
 
 function SignupSeller() {
     
         const History = useHistory()
-    
         const[name,setName]=useState('');
         const[mobile,setMobile]=useState('');
         const[email,setEmail]=useState('');
         const[Password,setPassword]=useState('');
         const [ConfirmPassword,setConfirmPassword]=useState('');
-        const [currentUser,setcurrentUser]=useState('')
-    const[error,setError]=useState('')
-    const [loading,setLoading]=useState(false)
-    const [id,setID]=useState('')
+        const[error,setError]=useState('')
+        const [loading,setLoading]=useState(false)
+    
         async function register(e)
          {
             e.preventDefault()
@@ -32,11 +32,9 @@ function SignupSeller() {
            setError('')
            setLoading(true)
 
-        const result= await  createUserWithEmailAndPassword(auth, email, Password)
+        await  createUserWithEmailAndPassword(auth, email, Password)
        .then((userCredential) =>
         {
-          
-          
         const x=  userCredential.user.uid
         if(auth)
                {
@@ -46,27 +44,21 @@ function SignupSeller() {
              }
               if(name!=='' && mobile!=='' &&email!=='' && Password!=='' && ConfirmPassword!=='')
                 {
-                           
+                           //keeping the data in real-time database with attaching userId
                   set(ref(database, 'users/' + x), {
                       username: name,
                       mobile: mobile,
-                     
-                    });
+                });
                   }
-  
-        })
+     })
          .catch((error) => {
-          const errorCode = error.code;
           const errorMessage = error.message;
           alert(errorMessage)
                   
               });    
           } 
        }
-      
-      
-          
-          return (
+         return (
             <div className='login'>
                 <Link to='/'>
                 <img className="login-logo"
@@ -79,7 +71,7 @@ function SignupSeller() {
                         <h5>Your name</h5>
                         <input type="text"  pattern="[a-z||A-Z]+"  value={name} onChange={e=> setName(e.target.value)} required/>
                         <h5>Mobile number</h5>
-                        <input type="tel" value={mobile} pattern="((\+*)((0[ -]*)*|((91 )*))((\d{12})+|(\d{10})+))|\d{5}([- ]*)\d{6}" onChange={e=> setMobile(e.target.value)} required/>
+                        <PhoneInput type="tel" value={mobile}  onChange={setMobile} required/>
                         <h5>Email</h5>
                         <input type="email" value={email} onChange={e=> setEmail(e.target.value)} required />
                         <h5>Password</h5>
@@ -105,11 +97,6 @@ function SignupSeller() {
                     
                 </div>
             </div>
-        )
-        
-
-        
-    
-}
-
+             )
+            }
 export default SignupSeller
